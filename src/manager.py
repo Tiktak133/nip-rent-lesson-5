@@ -34,24 +34,25 @@ class Manager:
                 costs += bill.amount_pln        
         return costs
     
-    def get_tenant_rents(self, tenant_key, year=0, month=0):
+    def get_tenant_rents(self, tenant_key):
         rents = 0
         if tenant_key not in self.tenants:
             return None
         
         for tenant in self.tenants:
-            if tenant.apartment == self.tenants[tenant_key].apartment and (tenant.settlement_year == year or year == 0) and (tenant.settlement_month == month or month == 0):
-                rents += tenant.amount_pln        
+            if tenant.apartment == self.tenants[tenant_key].apartment:
+                rents += tenant.rent_pln    
         return rents
     
-
-    
     def create_apartment_settlement(self, apartment_key, year, month):
+        bills = self.get_apartment_costs(apartment_key, year, month)
+        rent = self.get_tenant_rents(apartment_key)
+        
         return ApartmentSettlement(
             apartment=apartment_key,
             year=year,
             month=month,
-            total_bills_pln=self.get_apartment_costs(apartment_key, year, month),
-            total_rent_pln=self.get_tenant_rents(apartment_key, year, month),
-            #total_due_pln=self.get_apartment_costs(apartment_key, year, month) - self.get_transfers_sum_for_apartment(apartment_key, year, month)
+            total_bills_pln=bills,
+            total_rent_pln=rent,
+            total_due_pln=bills + rent
         )
