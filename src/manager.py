@@ -34,13 +34,10 @@ class Manager:
                 costs += bill.amount_pln        
         return costs
     
-    def get_tenant_rents(self, tenant_key):
-        rents = 0
-        if tenant_key not in self.tenants:
-            return None
-        
-        for tenant in self.tenants:
-            if tenant.apartment == self.tenants[tenant_key].apartment:
+    def get_tenant_rents(self, apartment_key):
+        rents = 0   
+        for tenant in self.tenants.values():
+            if tenant.apartment == apartment_key:
                 rents += tenant.rent_pln    
         return rents
     
