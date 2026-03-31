@@ -1,3 +1,4 @@
+from src import manager
 from src.models import Apartment
 from src.manager import Manager
 from src.models import Parameters
@@ -30,3 +31,10 @@ def test_if_tenants_have_valid_apartment_keys():
 
     manager.tenants['tenant-1'].apartment = 'invalid-key'
     assert manager.check_tenants_apartment_keys() == False
+    
+def test_get_apartment_costs():
+    parameters = Parameters()
+    manager = Manager(parameters)
+    assert manager.get_apartment_costs('apart-polanka', 2025, 1) == 760.0 + 150.0
+    assert manager.get_apartment_costs('apart-polanka', 2025, 2) == 0 # nie powinno być żadnych kosztów, bo nie ma żadnych rachunków z tym okresem rozliczeniowym
+    assert manager.get_apartment_costs('apartament-invalid', 2025, 1) == None
