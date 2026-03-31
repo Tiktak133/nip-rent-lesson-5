@@ -87,9 +87,9 @@ class ApartmentSettlement(BaseModel):
     apartment: str
     month: int
     year: int
-    total_rent_pln: float
-    total_bills_pln: float
-    total_due_pln: float
+    total_rent_pln: float   #suma czynszu wszystkich lokatorów
+    total_bills_pln: float  #suma wszystkich rachunków przypisanych do mieszkania
+    total_due_pln: float    #pozostało do zapłaty przez lokatorów
 
 
 class TenantSettlement(BaseModel):
